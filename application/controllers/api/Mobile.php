@@ -296,6 +296,7 @@ class Mobile extends REST_Controller {
 	public function bio_medical_waste_update_post()
     {
 		$userid=$this->post('id');
+		$h_id=$this->post('h_id');
 		$no_of_bags=$this->post('no_of_bags');
 		$no_of_kgs=$this->post('no_of_kgs');
 		$category=$this->post('category');
@@ -303,6 +304,10 @@ class Mobile extends REST_Controller {
 		$create_by=$this->post('create_by');
 		if($userid ==''){
 		$message = array('status'=>0,'message'=>'Id is required');
+		$this->response($message, REST_Controller::HTTP_OK);			
+		}
+		if($h_id ==''){
+		$message = array('status'=>0,'message'=>'Hospital id is required');
 		$this->response($message, REST_Controller::HTTP_OK);			
 		}if($no_of_bags ==''){
 		$message = array('status'=>0,'message'=>'No of bags is required');
@@ -328,6 +333,7 @@ class Mobile extends REST_Controller {
 		}
 		$update_data=array(
 		"hos_bio_m_id"=>isset($userid)?$userid:'',
+		"h_id"=>isset($h_id)?$h_id:'',
 		"no_of_bags"=>isset($no_of_bags)?$no_of_bags:'',
 		"no_of_kgs"=>isset($no_of_kgs)?$no_of_kgs:'',
 		"color_type"=>isset($category)?$category:'',
@@ -338,9 +344,22 @@ class Mobile extends REST_Controller {
 		"create_by"=>isset($create_by)?$create_by:'',
 		);
 		
-		//echo '<pre>';print_r($update_data);exit;
+		//echo '<pre>';print_r($update_data);
 		$update=$this->Mobile_model->save_plant_biomedical_waste($update_data);
 		if(count($update)>0){
+					$hospital_details=$this->Mobile_model->get_bio_medical_waste_hosipital($h_id);
+					//echo '<pre>';print_r($hospital_details);
+					if(count($hospital_details)>0){
+						$this->email->set_newline("\r\n");
+						$this->email->set_mailtype("html");
+						$body='Your bio-medical waste was received at the plant  No of Bags : '.$no_of_bags.'<br> No of kgs : '.$no_of_kgs.'<br> color type :'.$category.'<br> weight type : '.$weight_type.'.';
+					
+						$this->email->from('support@medspace.com');
+						$this->email->to($hospital_details['email']);
+						$this->email->subject('Biomedical waste acceptance report');
+						$this->email->message($body);
+						$this->email->send();
+					}
 					$message = array('status'=>1,'id'=>$update,'message'=>'Bio Medical Waste details are successfully updated');
 					$this->response($message, REST_Controller::HTTP_OK);
 				}else{

@@ -78,5 +78,12 @@ class Mobile_model extends CI_Model
 		$this->db->order_by('plant.p_id','desc');
 		return $this->db->get()->row_array();
 	}
+	/* nio medical waste hospital details */
+	public  function get_bio_medical_waste_hosipital($id){
+		$this->db->select('*')->from('hospital_list');
+		$this->db->where('hospital_list.h_id', $id);
+		return $this->db->get()->row_array();
+	}
+	/* nio medical waste hospital details */
 	
 }
