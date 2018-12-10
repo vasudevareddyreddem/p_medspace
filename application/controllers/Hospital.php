@@ -189,11 +189,12 @@ class Hospital extends CI_Controller {
 						'status'=>1,
 						'role'=>2
 					);
+					//echo '<pre>';print_r($post);exit;
 					$hos_save=$this->Admin_model->save_admin($addhos);
 					if(count($hos_save)>0){
 						$barcode_name = strtoupper(substr($post['hospital_name'], 0, 4));
 						$this->zend->load('Zend/Barcode');
-						$file = Zend_Barcode::draw('code128', 'image', array('text' => $barcode_name.$post['type'].$post['state'].$hos_save), array());
+						$file = Zend_Barcode::draw('code128', 'image', array('text' =>$barcode_name.$post['pincode'].$post['state'].$post['type'].$hos_save), array());
 						$code = time().$hos_save;
 						$store_image1 = imagepng($file, $this->config->item('documentroot')."assets/hospital_barcodes/{$code}.png");
 						$addhospital=array(
@@ -215,7 +216,7 @@ class Hospital extends CI_Controller {
 							'status'=>1,
 							'create_at'=>date('Y-m-d H:i:s'),
 							'barcode'=>$code.'.png',
-							'barcodetext'=>$barcode_name.$post['type'].$post['state'].$hos_save,
+							'barcodetext'=>$barcode_name.$post['pincode'].$post['state'].$post['type'].$hos_save,
 							'create_by'=>$admindetails['a_id']
 						);
 						$hospital_save=$this->Admin_model->save_hospital($addhospital);
