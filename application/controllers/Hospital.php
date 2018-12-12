@@ -95,7 +95,7 @@ class Hospital extends CI_Controller {
 									$this->session->set_flashdata('success','HCF successfully deactivated');
 
 								}else{
-									$this->session->set_flashdata('success','Hcf sucessfully activated');
+									$this->session->set_flashdata('success','HCF successfully activated');
 
 								}
 								redirect('hospital/lists');
@@ -221,7 +221,7 @@ class Hospital extends CI_Controller {
 						);
 						$hospital_save=$this->Admin_model->save_hospital($addhospital);
 						if(count($hospital_save)>0){
-							$this->session->set_flashdata('success','HCF added succcessfully');
+							$this->session->set_flashdata('success','HCF added successfully');
 							redirect('hospital/lists');
 						}else{
 							$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
@@ -257,7 +257,7 @@ class Hospital extends CI_Controller {
 				if($details['email']!=$post['email']){
 					$check_email=$this->Admin_model->email_check_details($post['email']);
 						if(count($check_email)>0){
-								$this->session->set_flashdata('error','Email id already exits. Please use another  email id');
+								$this->session->set_flashdata('error','Email id already exists. Please use another  email id');
 								if($admindetails['role']==2){
 										redirect('dashboard/profile');
 									}else{

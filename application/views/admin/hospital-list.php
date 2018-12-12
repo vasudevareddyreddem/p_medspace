@@ -18,7 +18,7 @@
                                             <th>Health Care Facility ID</th>
                                             <th>Health Care Facility Type</th>
                                             <th>Mobile</th>
-                                            <th>No fo Beds</th>
+                                            <th>No of Beds</th>
                                             <th>Barcode</th>
                                             <th>Reg Date & Time</th>
                                             <th>Status</th>

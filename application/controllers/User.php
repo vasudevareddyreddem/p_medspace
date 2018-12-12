@@ -95,7 +95,7 @@ class User extends CI_Controller {
 									$this->session->set_flashdata('success','User successfully deactivated');
 
 								}else{
-									$this->session->set_flashdata('success','User sucessfully activated');
+									$this->session->set_flashdata('success','User successfully activated');
 
 								}
 								redirect('user/lists');
@@ -175,7 +175,7 @@ class User extends CI_Controller {
 				//echo '<pre>';print_r($post);exit;
 				$check_email=$this->Admin_model->email_check_details($post['email']);
 				if(count($check_email)>0){
-						$this->session->set_flashdata('error','Email id already exits. Please use another  email id');
+						$this->session->set_flashdata('error','Email id already exists. Please use another  email id');
 						redirect('user/add');
 				}else{
 					$addhos=array(
@@ -198,7 +198,7 @@ class User extends CI_Controller {
 					$hos_save=$this->Admin_model->save_admin($addhos);
 					if(count($hos_save)>0){
 						
-							$this->session->set_flashdata('success','User added succcessfully');
+							$this->session->set_flashdata('success','User added successfully');
 							redirect('user/lists');
 					
 						
